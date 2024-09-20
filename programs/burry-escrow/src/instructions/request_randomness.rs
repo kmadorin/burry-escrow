@@ -19,10 +19,6 @@ pub fn request_randomness_handler(ctx: Context<RequestRandomness>, randomness_ac
     // Update the RandomnessState
     let randomness_state = &mut ctx.accounts.randomness_state;
     randomness_state.randomness_account = randomness_account;
-    randomness_state.dice_type = 6; // Set the dice type to 6-sided dice
-    randomness_state.die_result_1 = 0; // Initialize dice results
-    randomness_state.die_result_2 = 0;
-    randomness_state.escrow = ctx.accounts.escrow_account.key();
 
     Ok(())
 }
@@ -31,12 +27,6 @@ pub fn request_randomness_handler(ctx: Context<RequestRandomness>, randomness_ac
 pub struct RequestRandomness<'info> {
     #[account(mut)]
     pub user: Signer<'info>,
-    #[account(
-        mut,
-        seeds = [ESCROW_SEED, user.key().as_ref()],
-        bump,
-    )]
-    pub escrow_account: Account<'info, EscrowState>,
     #[account(
         init_if_needed,
         payer = user,

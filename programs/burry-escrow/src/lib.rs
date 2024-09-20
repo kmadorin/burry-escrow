@@ -1,6 +1,7 @@
 use anchor_lang::prelude::*;
 use instructions::deposit::*;
 use instructions::withdraw::*;
+use instructions::init_randomness_state::*;
 use instructions::get_out_of_jail::*;
 use instructions::request_randomness::*;
 
@@ -8,7 +9,7 @@ pub mod errors;
 pub mod instructions;
 pub mod state;
 
-declare_id!("DXkUUYVwGG2fxswCtarxNqFG3d6CQEKB24cEiNAiigB3");
+declare_id!("Ej7kfzXAf9J77UwzH9ogwaYt8cPFh4DGaE5V9vzgsQax");
 
 #[program]
 pub mod burry_escrow {
@@ -20,6 +21,10 @@ pub mod burry_escrow {
 
     pub fn withdraw(ctx: Context<Withdraw>) -> Result<()> {
         withdraw_handler(ctx)
+    }
+
+    pub fn init_randomness_state(ctx: Context<InitRandomnessState>) -> Result<()> {
+        init_randomness_state_handler(ctx)
     }
 
     pub fn get_out_of_jail(ctx: Context<GetOutOfJail>) -> Result<()>{

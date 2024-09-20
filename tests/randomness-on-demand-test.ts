@@ -39,7 +39,7 @@ function delay(ms: number) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-describe("burry-escrow-randomness", () => {
+describe.only("burry-escrow-randomness", () => {
   // Configure the client to use the local cluster.
   anchor.setProvider(anchor.AnchorProvider.env());
   const provider = anchor.AnchorProvider.env()
@@ -200,6 +200,20 @@ describe("burry-escrow-randomness", () => {
       "  Transaction Signature for randomness account creation and requesting randomness: ",
       sig1
     );
+
+
+    // Initialize randomness state account
+    await program.methods.initRandomnessState()
+        .accounts({
+            user: payer.publicKey,
+            escrowAccount: escrowState,
+            randomnessState: randomnessState,
+            systemProgram: anchor.web3.SystemProgram.programId,
+        })
+        .signers([payer])
+        .rpc();
+
+    console.log("RandomnessState initialized");
 
     async function requestRandomnessAndTryToGetOutOfJail() {
 

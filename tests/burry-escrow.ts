@@ -111,6 +111,7 @@ describe("burry-escrow", () => {
 
     assert(accountFetchDidFail);
   });
+  
   it("Create Burry Escrow Above Price", async () => {
     // fetch switchboard devnet program object
     const switchboardProgram = await SwitchboardProgram.load(
