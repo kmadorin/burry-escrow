@@ -18,5 +18,6 @@ pub struct RandomnessState {
     pub dice_type: u8,
     pub die_result_1: u8,
     pub die_result_2: u8,
+    pub roll_count: u8,
     pub escrow: Pubkey,
 }

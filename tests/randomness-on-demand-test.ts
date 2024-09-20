@@ -276,8 +276,9 @@ describe.only("burry-escrow-randomness", () => {
       console.log('Get out of jail transaction signature:', sig3);
     }
 
-    let rolledDoubles = false;
-    while (!rolledDoubles) {
+    // SOLUTION EDIT: Renamed from rolledDoubles to outOfJail
+    let outOfJail = false;
+    while (!outOfJail) {
       try {
         // Request randomness
         await requestRandomnessAndTryToGetOutOfJail();
@@ -288,11 +289,14 @@ describe.only("burry-escrow-randomness", () => {
         console.log("Die 1:", randomnessStateAccount.dieResult1);
         console.log("Die 2:", randomnessStateAccount.dieResult2);
 
-        if (randomnessStateAccount.dieResult1 === randomnessStateAccount.dieResult2) {
-          rolledDoubles = true;
+        if (randomnessStateAccount.rollCount >= 3) {
+          console.log("Rolled 3 times, out of jail!")
+          outOfJail = true
+        } else if (randomnessStateAccount.dieResult1 === randomnessStateAccount.dieResult2) {
           console.log("Rolled doubles!");
+          outOfJail = true;
         } else {
-          console.log("No doubles. Trying again...");
+          console.log("Resetting die...");
           await delay(5000);
         }
 

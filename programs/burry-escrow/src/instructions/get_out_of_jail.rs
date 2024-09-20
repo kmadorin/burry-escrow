@@ -20,6 +20,14 @@ pub fn get_out_of_jail_handler(ctx: Context<GetOutOfJail>) -> Result<()> {
     randomness_state.die_result_1 = (revealed_random_value[0] % dice_type) + 1;
     randomness_state.die_result_2 = (revealed_random_value[1] % dice_type) + 1;
 
+    // SOLUTION EDIT: Ticked up roll count and checked if over 3
+    randomness_state.roll_count = randomness_state.roll_count.saturating_add(1);
+    if randomness_state.roll_count >= 3 {
+        msg!("Three rolls and you're out of jail!");
+        let escrow_state = &mut ctx.accounts.escrow_account;
+        escrow_state.out_of_jail = true;
+    }
+
     // Check if doubles were rolled
     if randomness_state.die_result_1 == randomness_state.die_result_2 {
         // Update the EscrowState

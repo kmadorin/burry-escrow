@@ -27,6 +27,7 @@ pub fn init_randomness_state_handler(ctx: Context<InitRandomnessState>) -> Resul
     randomness_state.dice_type = 6; // Set the dice type to 6-sided dice
     randomness_state.die_result_1 = 0; // Initialize dice results
     randomness_state.die_result_2 = 0;
+    randomness_state.roll_count = 0; // Initialize roll count
     randomness_state.escrow = ctx.accounts.escrow_account.key();
     randomness_state.randomness_account = Pubkey::default(); // Will be set later during request_randomness
     Ok(())
