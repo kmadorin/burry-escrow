@@ -11,4 +11,8 @@ pub enum EscrowErrorCode {
     ConfidenceIntervalExceeded,
     #[msg("Current SOL price is not above Escrow unlock price.")]
     SolPriceAboveUnlockPrice,
+    #[msg("Randomness has already been revealed")]
+    RandomnessAlreadyRevealed,
+    #[msg("Randomness has not been resolved yet")]
+    RandomnessNotResolved,
 }
